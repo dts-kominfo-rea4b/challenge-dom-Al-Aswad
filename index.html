@@ -1,100 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Challenge - DOM</title>
-    <style>
-      *{
-        box-sizing: border-box;
-        padding: 0;
-        margin: 0;
-      }
-      body{
-        min-height: 100vh;
-        padding: 20px;
-        background-color: #958dc4;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-      }
-      #app {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        border-radius: 10px;
-        width: 30%;
-        margin-top: 20px;
-        padding: 20px;
-        background-color: white;
-      }
 
-      #todo-title{
-        background-color: aquamarine;
-        margin-bottom: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app">
-      <!-- TODO: Buatlah sebuah header dengan id todo-title -->
-      <!-- TODO: Buatlah sebuah subtitle dengan id todo-subtitle -->
-      <header id='todo-title'>
-        <h1 id="todo-subtitle">Todo List</h1>
-      </header>
-      <!-- Section: input -->
-      <!-- TODO: Buatlah sebuah input bertipe text dengan id todo-input -->
-      <!-- TODO: Buatlah sebuah button dengan id todo-submit -->
-      <div>
-        <p style="text-align: center;">~ Today I need to ~</p>
-        <input id="todo-input" type="text">
-        <button id="todo-submit">Submit</button>
-      </div>
-      <!-- Section output -->
-      <!-- TODO: Buatlah sebuah <ul> dengan id todo-output -->
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Challenge - DOM</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 20px;
+      background-color: #958dc4;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    #app {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border-radius: 10px;
+      width: 30%;
+      margin-top: 20px;
+      padding: 20px;
+      background-color: white;
+    }
+
+    #todo-title {
+      background-color: aquamarine;
+      margin-bottom: 20px;
+    }
+
+    #todo-input {
+      margin-top: 10px;
+      padding: 2px 4px;
+    }
+    #output{
+      width: 70%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- TODO: Buatlah sebuah header dengan id todo-title -->
+    <!-- TODO: Buatlah sebuah subtitle dengan id todo-subtitle -->
+    <header id='todo-title'>
+      <h1 id="todo-subtitle">Todo List</h1>
+    </header>
+    <!-- Section: input -->
+    <!-- TODO: Buatlah sebuah input bertipe text dengan id todo-input -->
+    <!-- TODO: Buatlah sebuah button dengan id todo-submit -->
+    <div>
+      <p style="text-align: center;">~ Today I need to ~</p>
+      <input id="todo-input" type="text">
+      <button id="todo-submit">Submit</button>
+    </div>
+    <!-- Section output -->
+    <!-- TODO: Buatlah sebuah <ul> dengan id todo-output -->
+    <div id="output">
       <ul id="todo-output"></ul>
     </div>
+  </div>
 
-    <!-- ! Untuk tantangan ini, script jangan diubah ke external js yah ! -->
-    <script>
-      // TODO: Deklarasi variable sesuai dengan kebutuhan di sini
-      let button;
-      let input;
-      let output=[];
+  <!-- ! Untuk tantangan ini, script jangan diubah ke external js yah ! -->
+  <script>
+    // TODO: Deklarasi variable sesuai dengan kebutuhan di sini
+    let button;
+    let input;
+    let output = [];
+    button = document.getElementById('todo-submit');
+    input = document.getElementById('todo-input');
+    outputContent = document.getElementById('todo-output');
 
-      // TODO: Buatlah sebuah fungsi dengan nama fnClickHandler
-      // Fungsi yang digunakan untuk menambahkan tulisan
-      // Jangan ubah cara deklarasi fungsinya, cukup isi saja
-      function fnClickHandler(toDoItem) {
-        input=document.getElementById('todo-input');
-        output.push(input.value);
-        
-        let list=document.createElement('li');
-        list.innerHTML=output[output.length-1];
-        document.getElementById('todo-output').appendChild(list);
+    // TODO: Buatlah sebuah fungsi dengan nama fnClickHandler
+    // Fungsi yang digunakan untuk menambahkan tulisan
+    // Jangan ubah cara deklarasi fungsinya, cukup isi saja
+    function fnClickHandler(toDoItem) {
+      output.push(input.value);
+
+      let list = document.createElement('li');
+      list.innerHTML = output[output.length - 1];
+      outputContent.appendChild(list);
+      clearText();
+    }
+
+    function clearText() {
+      input.value = '';
+    }
+
+    // TODO: register event onclick / addEventListener untuk button
+    // akan menjalankan fungsi fnClickHandler
+    button.addEventListener("click", fnClickHandler);
+
+    // TODO: register event onkeypress / addEventListener untuk input
+    // sehingga saat di input ditekan enter akan menjalankan fungsi fnClickHandler juga
+    input.addEventListener("keypress", function (e) {
+      if (e.key === 'Enter') {
+        fnClickHandler();
         clearText();
       }
+    });
+  </script>
+</body>
 
-      function clearText(){
-        document.getElementById('todo-input').value='';
-      }
-
-      // TODO: register event onclick / addEventListener untuk button
-      // akan menjalankan fungsi fnClickHandler
-      button= document.getElementById('todo-submit');
-      button.addEventListener("click", fnClickHandler);
-      
-      // TODO: register event onkeypress / addEventListener untuk input
-      // sehingga saat di input ditekan enter akan menjalankan fungsi fnClickHandler juga
-      input=document.getElementById('todo-input');
-      input.addEventListener("keypress", function(e){
-        if(e.key==='Enter'){
-          fnClickHandler();
-          clearText();
-        }
-      });
-    </script>
-  </body>
 </html>
